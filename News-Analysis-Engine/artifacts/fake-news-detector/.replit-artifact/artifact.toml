@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Fake News Detector"
+version = "1.0.0"
+id = "artifacts/fake-news-detector"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25394
+
+[services.development]
+run = "pnpm --filter @workspace/fake-news-detector run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fake-news-detector", "run", "build" ]
+publicDir = "artifacts/fake-news-detector/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25394"
+BASE_PATH = "/"

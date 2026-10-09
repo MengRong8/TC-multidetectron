@@ -1,0 +1,162 @@
+services:
+  backend-img:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.img
+    ports:
+      - "6501:5000"
+    volumes:
+      - ./backend:/app/backend
+      - ./img_cbm:/app/img_cbm
+      - ./models:/app/models
+      - ./checkpoints/image:/app/checkpoints/image
+      - ./data:/app/data:ro
+      - /app/.venv
+      - /app/__pycache__
+      - ${HF_CACHE_DIR:-./.cache/huggingface}:/root/.cache/huggingface
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HF_TOKEN=${HF_TOKEN:-}
+      - IMAGE_AIGC_ENABLED=true
+      - TEXT_AIGC_ENABLED=false
+      - TEXT_INTENT_ENABLED=false
+      - IMAGE_AIGC_ENCODER_PATH=/app/img_cbm/checkpoints/cbm-encoder.pt
+      - IMAGE_AIGC_PREDICTOR_PATH=/app/img_cbm/checkpoints/cbm-predictor.pt
+    gpus: all
+    deploy:
+      resources:
+        limits:
+          cpus: "8.0"
+          memory: 8G
+        reservations:
+          cpus: "4.0"
+          memory: 4G
+    restart: unless-stopped
+    command: python backend/app.py --host 0.0.0.0 --port 5000
+
+  backend-aigc:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.aigc
+    ports:
+      - "6502:5000"
+    volumes:
+      - ./backend:/app/backend
+      - /mnt/ssd_1TB/news_dataset/model/roberta_aigc_layer:/app/roberta_model:ro
+      - /app/.venv
+      - /app/__pycache__
+      - ${HF_CACHE_DIR:-./.cache/huggingface}:/root/.cache/huggingface
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HF_TOKEN=${HF_TOKEN:-}
+      - IMAGE_AIGC_ENABLED=false
+      - TEXT_AIGC_ENABLED=true
+      - TEXT_INTENT_ENABLED=false
+      - TEXT_AIGC_MODEL_PATH=/app/roberta_model/roberta-fake-news-detection-final
+    deploy:
+      resources:
+        limits:
+          cpus: "8.0"
+          memory: 8G
+        reservations:
+          cpus: "4.0"
+          memory: 4G
+    restart: unless-stopped
+    command: python backend/app.py --host 0.0.0.0 --port 5000
+
+  backend-intent:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.intent
+    ports:
+      - "6503:5000"
+    volumes:
+      - ./backend:/app/backend
+      - /mnt/ssd_1TB/news_dataset/model/cbllm_intent_layer:/app/cbllm_model:ro
+      - ${HF_CACHE_DIR:-./.cache/huggingface}:/root/.cache/huggingface
+      - /app/.venv
+      - /app/__pycache__
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HF_TOKEN=${HF_TOKEN:-}
+      - IMAGE_AIGC_ENABLED=false
+      - TEXT_AIGC_ENABLED=false
+      - TEXT_INTENT_ENABLED=true
+      - TEXT_INTENT_MODEL_PATH=/app/cbllm_model/cbm_epoch_4.pth
+      - TEXT_INTENT_CONCEPT_MAP_PATH=
+      - CBLLM_BASE_MODEL=unsloth/Qwen3-8B-unsloth-bnb-4bit
+      - CBLLM_MAX_SEQ_LENGTH=1024
+      - CBLLM_LOAD_IN_4BIT=true
+      - CBLLM_THRESHOLD=0.5
+      - CBLLM_TOP_K=3
+    gpus: all
+    deploy:
+      resources:
+        limits:
+          cpus: "8.0"
+          memory: 16G
+        reservations:
+          cpus: "4.0"
+          memory: 8G
+    restart: unless-stopped
+    command: python backend/app.py --host 0.0.0.0 --port 5000
+
+  backend-gateway:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.gateway
+    depends_on:
+      - backend-img
+      - backend-aigc
+      - backend-intent
+    ports:
+      - "6500:5000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./backend:/app/backend
+      - /mnt/ssd_1TB/news_dataset/model/fusion_layer:/app/fusion_model:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - AIGC_SERVICE_URL=http://backend-aigc:5000
+      - INTENT_SERVICE_URL=http://backend-intent:5000
+      - IMG_SERVICE_URL=http://backend-img:5000
+      - FUSION_CHECKPOINT_PATH=/app/fusion_model/fusion_mlp_v1_best.pt
+      - FUSION_THRESHOLD=0.5
+      - LLM_PROVIDER=ollama
+      - OLLAMA_URL=http://host.docker.internal:11435
+      - LLM_MODEL=qwen3.5:4b
+      - HF_MODEL=Qwen/Qwen3.5-9B
+      - HF_API_BASE=https://router.huggingface.co
+      - HF_API_TOKEN=${HF_API_TOKEN:-}
+      - LLM_REPORT_ENABLED=true
+    restart: unless-stopped
+    command: python backend/gateway.py --host 0.0.0.0 --port 5000
+
+  frontend:
+    build:
+      context: ./News-Analysis-Engine
+      dockerfile: artifacts/fake-news-detector/Dockerfile
+    # container_name: miragenews-frontend
+    depends_on:
+      - backend-gateway
+    ports:
+      - "3600:3000"
+    volumes:
+      - ./News-Analysis-Engine:/workspace
+      - /workspace/node_modules
+    environment:
+      - PORT=3000
+      - BASE_PATH=/
+      - VITE_API_URL=http://localhost:6500
+      - CI=true
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4G
+        reservations:
+          cpus: "2.0"
+          memory: 2G
+    restart: unless-stopped
+    command: sh -c "pnpm install --no-frozen-lockfile && pnpm --filter @workspace/fake-news-detector dev"

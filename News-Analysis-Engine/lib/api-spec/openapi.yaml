@@ -1,0 +1,241 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Fake News Detector API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: detection
+    description: Fake news detection operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /detect:
+    post:
+      operationId: detectFakeNews
+      tags: [detection]
+      summary: Detect fake news
+      description: Analyze news content with multiple models and return scores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DetectionRequest"
+      responses:
+        "200":
+          description: Detection results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DetectionResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /crawl:
+    post:
+      operationId: crawlUrl
+      tags: [detection]
+      summary: Crawl news URL
+      description: Crawl a news URL to extract title, content, and images
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrawlRequest"
+      responses:
+        "200":
+          description: Crawled content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrawlResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Failed to crawl
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    DetectionRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: News article title
+        content:
+          type: string
+          description: Full news article text content
+        imageBase64:
+          type: string
+          description: Base64 encoded image (optional)
+        imageUrl:
+          type: string
+          description: URL of image to analyze (optional)
+        sourceUrl:
+          type: string
+          description: Original URL source (optional)
+      required:
+        - title
+        - content
+
+    ModelScore:
+      type: object
+      properties:
+        modelName:
+          type: string
+          description: Name of the model
+        modelType:
+          type: string
+          description: Type/role of the model
+        score:
+          type: number
+          description: Score from 0 to 1 (0=real, 1=fake)
+        confidence:
+          type: number
+          description: Confidence of the prediction
+        label:
+          type: string
+          description: Human-readable label
+        details:
+          type: string
+          description: Brief explanation of the score
+      required:
+        - modelName
+        - modelType
+        - score
+        - confidence
+        - label
+        - details
+
+    DetectionResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique detection ID
+        title:
+          type: string
+        sourceUrl:
+          type: string
+        textAigcScore:
+          $ref: "#/components/schemas/ModelScore"
+        textIntentScore:
+          $ref: "#/components/schemas/ModelScore"
+        imageAigcScore:
+          $ref: "#/components/schemas/ModelScore"
+        finalScore:
+          type: number
+          description: Final fused score from linear layer (0=real, 1=fake)
+        finalLabel:
+          type: string
+          description: Final verdict label
+        finalConfidence:
+          type: number
+          description: Overall confidence
+        report:
+          type: string
+          description: LLM-generated analysis report
+        analyzedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - textAigcScore
+        - textIntentScore
+        - imageAigcScore
+        - finalScore
+        - finalLabel
+        - finalConfidence
+        - report
+        - analyzedAt
+
+    CrawlRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the news article to crawl
+      required:
+        - url
+
+    CrawlResult:
+      type: object
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        imageUrls:
+          type: array
+          items:
+            type: string
+          description: List of image URLs found in the article
+        publishedAt:
+          type: string
+        author:
+          type: string
+        siteName:
+          type: string
+      required:
+        - url
+        - title
+        - content
+        - imageUrls
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+        - message

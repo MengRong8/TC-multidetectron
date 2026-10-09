@@ -1,0 +1,137 @@
+{
+  "article_summary": "\n    昨日上午，台北車站發生嚴重的地下瓦斯管線氣爆事件，導致整個車站大廳屋頂完全坍塌，現場死傷慘重。許多目擊民眾在社群媒體上表示，當時聽到巨大的震天巨響，感到非常驚恐。然而，台北市政府消防局隨後發...",
+  "total_candidates": 3,
+  "total_confirmed": 3,
+  "total_excluded": 0,
+  "confirmed_contradictions": [
+    {
+      "contradiction": true,
+      "type": "事實對立",
+      "severity": "medium",
+      "sent1": {
+        "text": "昨日上午，台北車站發生嚴重的地下瓦斯管線氣爆事件，導致整個車站大廳屋頂完全坍塌，現場死傷慘重。",
+        "credibility": 20,
+        "claim_count": 2
+      },
+      "sent2": {
+        "text": "然而，台北市政府消防局隨後發布的官方聲明卻指出，台北車站昨日全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。",
+        "credibility": 20,
+        "claim_count": 2
+      },
+      "evidence_summary": "LLM對以下claim置信度低：2023年某日上午，台北車站發生嚴重的地下瓦斯管線氣爆事件，導致整個車站大廳屋頂完全坍塌，現場死傷慘重。, 台北市政府消防局發布的官方聲明指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。",
+      "google_api_used": false,
+      "nli_contradiction_score": 0.99560546875,
+      "classification_confidence": 0.95,
+      "sent1_idx": 0,
+      "sent2_idx": 2,
+      "classification_explanation": "句子1描述了台北車站發生了嚴重的氣爆事件，造成重大損失和傷亡，而句子2則表示台北車站全天運營正常，沒有任何爆炸報告，這兩者在事實上是對立的。",
+      "claims_verified": {
+        "2023年某日上午，台北車站發生嚴重的地下瓦斯管線氣爆事件，導致整個車站大廳屋頂完全坍塌，現場死傷慘重。": {
+          "llm_confidence": 20,
+          "source_type": "uncertain",
+          "claim_type": "event",
+          "priority": "high",
+          "reasoning": "由於該事件描述涉及2023年的具體事件，而我的訓練數據僅更新到2023年10月，無法確認此事件的真實性。此外，這類事件通常會在新聞中廣泛報導，但我無法查證這些報導，因此確信度較低。",
+          "search_query": "台北車站 地下瓦斯管線 氣爆 2023"
+        },
+        "台北市政府消防局發布的官方聲明指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。": {
+          "llm_confidence": 20,
+          "source_type": "uncertain",
+          "claim_type": "organization",
+          "priority": "high",
+          "reasoning": "由於這個聲明涉及2023年的事件，而我的訓練數據僅更新到2023年10月，因此無法驗證該事件的準確性。此外，這類事件通常需要依賴於即時的新聞報導或官方公告，而這些資訊不在我的訓練數據範圍內。",
+          "search_query": "台北市政府消防局 台北車站 營運正常 無火災爆炸報案 2023"
+        }
+      }
+    },
+    {
+      "contradiction": true,
+      "type": "事實對立",
+      "severity": "medium",
+      "sent1": {
+        "text": "許多目擊民眾在社群媒體上表示，當時聽到巨大的震天巨響，感到非常驚恐。",
+        "credibility": 20,
+        "claim_count": 1
+      },
+      "sent2": {
+        "text": "然而，台北市政府消防局隨後發布的官方聲明卻指出，台北車站昨日全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。",
+        "credibility": 20,
+        "claim_count": 2
+      },
+      "evidence_summary": "LLM對以下claim置信度低：許多目擊民眾在社群媒體上表示，昨日上午在台北車站發生的地下瓦斯管線氣爆事件中，當時聽到巨大的震天巨響，感到非常驚恐。, 台北市政府消防局發布的官方聲明指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。",
+      "google_api_used": false,
+      "nli_contradiction_score": 0.880859375,
+      "classification_confidence": 0.95,
+      "sent1_idx": 1,
+      "sent2_idx": 2,
+      "classification_explanation": "句子1描述了目擊者聽到巨響並感到驚恐，暗示發生了異常事件，而句子2的官方聲明則否認任何異常事件的報告，這兩者在事實上存在直接矛盾。",
+      "claims_verified": {
+        "許多目擊民眾在社群媒體上表示，昨日上午在台北車站發生的地下瓦斯管線氣爆事件中，當時聽到巨大的震天巨響，感到非常驚恐。": {
+          "llm_confidence": 20,
+          "source_type": "uncertain",
+          "claim_type": "event",
+          "priority": "medium",
+          "reasoning": "由於這個事件涉及2023年以後的具體事件，而我的訓練數據僅涵蓋到2023年10月，因此我無法確認這一事件的準確性或真實性。",
+          "search_query": "台北車站 瓦斯管線 氣爆 目擊民眾 社群媒體"
+        },
+        "台北市政府消防局發布的官方聲明指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。": {
+          "llm_confidence": 20,
+          "source_type": "uncertain",
+          "claim_type": "organization",
+          "priority": "high",
+          "reasoning": "由於此事件涉及2023年的具體日期，而我的訓練數據僅更新至2023年10月，因此無法確認該事件的真實性或準確性。",
+          "search_query": "台北市政府消防局 台北車站 營運正常 無火災爆炸報案 2023"
+        }
+      }
+    },
+    {
+      "contradiction": true,
+      "type": "事實對立",
+      "severity": "medium",
+      "sent1": {
+        "text": "然而，台北市政府消防局隨後發布的官方聲明卻指出，台北車站昨日全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。",
+        "credibility": 13,
+        "claim_count": 3
+      },
+      "sent2": {
+        "text": "令人不解的是，交通部部長在昨晚的緊急記者會上不僅確認了氣爆的發生，更宣布因受損嚴重，全台高鐵將自今日起無限期全面停駛。",
+        "credibility": 13,
+        "claim_count": 3
+      },
+      "evidence_summary": "LLM對以下claim置信度低：台北市政府消防局指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。, 交通部部長在昨晚的緊急記者會上確認台北車站發生氣爆事件。",
+      "google_api_used": false,
+      "nli_contradiction_score": 0.84912109375,
+      "classification_confidence": 0.9,
+      "sent1_idx": 2,
+      "sent2_idx": 4,
+      "classification_explanation": "句子1和句子2對於台北車站的事件描述存在明顯矛盾。句子1表示台北車站全天營運正常，無任何火災或爆炸報案，而句子2則確認了氣爆事件的發生，並導致高鐵停駛。這兩者在事實上存在直接對立。",
+      "claims_verified": {
+        "台北市政府消防局指出，2023年某日台北車站全天營運狀況一切正常，並未接獲任何火災或爆炸的報案紀錄。": {
+          "llm_confidence": 20,
+          "source_type": "uncertain",
+          "claim_type": "event",
+          "priority": "high",
+          "reasoning": "由於該陳述涉及2023年的事件，而我的訓練數據僅涵蓋到2023年10月，因此我無法驗證該事件的準確性。此外，這類特定日期的事件通常需要即時的新聞來源來確認。",
+          "search_query": "台北市政府消防局 台北車站 營運正常 火災 爆炸報案 2023"
+        },
+        "交通部部長在昨晚的緊急記者會上確認台北車站發生氣爆事件。": {
+          "llm_confidence": 10,
+          "source_type": "uncertain",
+          "claim_type": "event",
+          "priority": "high",
+          "reasoning": "由於我無法訪問2023年以後的即時新聞或事件，因此無法確認這一聲明的準確性。這可能是最近發生的事件，超出了我的訓練數據範圍。",
+          "search_query": "交通部部長 台北車站 氣爆事件 確認"
+        },
+        "交通部部長宣布因台北車站氣爆事件受損嚴重，全台高鐵自今日起無限期全面停駛。": {
+          "llm_confidence": 10,
+          "source_type": "uncertain",
+          "claim_type": "event",
+          "priority": "high",
+          "reasoning": "截至我最新的訓練數據（2023年10月），並沒有關於台北車站氣爆事件導致全台高鐵無限期停駛的記錄。這類事件通常會被廣泛報導，因此缺乏相關信息使得這個聲明的可信度較低。",
+          "search_query": "交通部部長 台北車站 氣爆事件 全台高鐵 無限期停駛"
+        }
+      }
+    }
+  ],
+  "excluded_candidates": []
+}

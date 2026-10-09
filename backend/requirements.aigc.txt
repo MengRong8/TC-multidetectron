@@ -1,0 +1,21 @@
+# Text AIGC runtime dependencies
+# Keep aligned with backend/requirements.txt baseline for RoBERTa path.
+
+# Web Framework
+flask==3.0.0
+flask-cors==4.0.0
+
+# Deep Learning
+torch==2.1.0
+torchvision==0.16.0
+transformers==4.36.0
+sentencepiece==0.1.99
+accelerate==0.25.0
+
+# Image Processing (imported by backend/models.py)
+Pillow==10.1.0
+
+# Web Scraping / Utility
+requests==2.31.0
+beautifulsoup4==4.12.2
+numpy==1.26.2

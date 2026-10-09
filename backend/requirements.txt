@@ -1,0 +1,30 @@
+# Backend API Server for Fake News Detection
+# Python 依賴包
+
+# Web Framework
+flask==3.0.0
+flask-cors==4.0.0
+
+# Deep Learning
+torch==2.1.0
+torchvision==0.16.0
+transformers==4.36.0
+sentencepiece==0.1.99
+accelerate==0.25.0
+
+# Image Processing
+Pillow==10.1.0
+scipy==1.11.4
+
+# Object Detection
+ultralytics==8.2.0  # YOLO-World v2
+
+# Web Scraping
+requests==2.31.0
+beautifulsoup4==4.12.2
+
+# Utilities
+numpy==1.26.2
+
+# Optional: For Text Intent Model (Unsloth)
+# unsloth @ git+https://github.com/unslothai/unsloth.git

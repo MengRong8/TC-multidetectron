@@ -1,0 +1,13 @@
+model:
+  name: "cbm-encoder"
+
+# 指定使用的 crops 目錄和 splits
+crops_dir: "encodings/crops_new"
+train_split: "train_noise"
+eval_split: "train_noise"
+
+training:
+  epochs: 100
+  batch_size: 64
+  learning_rate: 0.001
+  save_path: "checkpoints/image/cbm-encoder-train-noise.pt"

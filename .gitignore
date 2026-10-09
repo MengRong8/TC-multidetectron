@@ -1,0 +1,78 @@
+# IDE
+.vscode/
+
+# Large files
+*.sh
+Miniconda*.sh
+
+# 根目錄的大型資料夾（但保留 img_cbm/）
+/checkpoints/
+/encodings/
+/models/
+/utils/
+/data/crops/
+/data/crops_new/
+/data/news_dataset/
+/data/split_datasets/
+/data/decision_fusion_dataset/
+/data/mirage_news_dataset/
+/data/test2_bbc_dalle/
+/data/test3_cnn_dalle/
+/data/test4_bbc_sdxl/
+/data/test5_cnn_sdxl/
+/data/test_dataset_config/
+
+# 實驗和分析腳本
+analyze_cbm_predictor_weights.py
+batch_explain.py
+batch_explain_cbm.log
+batch_explain_top3.py
+explain_cbm.py
+process_test_janus_10.py
+regenerate_predictions.py
+test_train_noise.py
+to_file.py
+/test_img.py
+
+# 圖片生成相關
+img_generate_diffusion.py
+generate_janus_pro_images.py
+generate_janus_prompts_agent.py
+generate_sdxl_images.py
+generate_sdxl_prompts_agent.py
+generate_with_stable_diffusion.py
+encode_mirage_news_dataset.py
+
+# 決策融合相關
+final_decision_dataset_plan.md
+generate_decision_fusion_dataset.py
+
+# 實驗結果和生成內容
+explanations/
+generated_janus/
+result/
+weight_analysis/
+with_boxes.jpg/
+
+# 但不忽略 img_cbm 內的 .pt 文件
+*.pt
+!img_cbm/**/*.pt
+
+# Common Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual envs
+venv/
+env/
+.venv
+.env
+
+# Local env / logs
+.env
+.env.local
+*.log

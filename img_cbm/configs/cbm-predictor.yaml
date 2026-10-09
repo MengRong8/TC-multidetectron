@@ -1,0 +1,74 @@
+model:
+  name: "cbm-predictor"
+
+training:
+  epochs: 100
+  batch_size: 64
+  learning_rate: 0.001
+  save_path: "checkpoints/image/cbm-predictor.pt"
+
+train_dataset:
+  name: "img-or-text"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/train/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/train/fake.pt"
+
+test_dataset:
+  name: "img-or-text"
+  test_name: "test"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test/fake.pt"
+
+test1_dataset:
+  name: "img-or-text"
+  test_name: "test_janus"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test_janus/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test_janus/fake.pt"
+
+# test2_dataset:
+#   name: "img-or-text"
+#   test_name: "mirage_test"
+#   params:
+#     real_pt: "encodings/predictions/image/cbm-encoder/mirage_test/real.pt"
+#     fake_pt: "encodings/predictions/image/cbm-encoder/mirage_test/fake.pt"
+
+test3_dataset:
+  name: "img-or-text"
+  test_name: "mirage_news_dataset"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/mirage_news_dataset/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/mirage_news_dataset/fake.pt"
+
+test4_dataset:
+  name: "img-or-text"
+  test_name: "test2_bbc_dalle"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test2_bbc_dalle/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test2_bbc_dalle/fake.pt"
+
+test5_dataset:
+  name: "img-or-text"
+  test_name: "test3_cnn_dalle"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test3_cnn_dalle/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test3_cnn_dalle/fake.pt"
+
+test6_dataset:
+  name: "img-or-text"
+  test_name: "test4_bbc_sdxl"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test4_bbc_sdxl/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test4_bbc_sdxl/fake.pt"
+
+test7_dataset:
+  name: "img-or-text"
+  test_name: "test5_cnn_sdxl"
+  params:
+    real_pt: "encodings/predictions/image/cbm-encoder/test5_cnn_sdxl/real.pt"
+    fake_pt: "encodings/predictions/image/cbm-encoder/test5_cnn_sdxl/fake.pt"
+
+testing:
+  batch_size: 64
+  save_path: "results/image/cbm-predictor.jsonl"

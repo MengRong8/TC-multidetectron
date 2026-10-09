@@ -1,0 +1,13 @@
+packages:
+  "framer-motion": "For high-quality, staggered animations in the results display to make it feel analytical and premium."
+  "clsx": "For conditional class name merging."
+  "tailwind-merge": "For merging tailwind classes safely."
+
+images:
+  - path: "artifacts/fake-news-detector/public/images/cyber-bg.png"
+    description: "Dark, moody abstract cyber network background. Glowing teal and deep blue nodes, shallow depth of field, high-tech analytical aesthetic, very clean and professional."
+    aspect_ratio: "16:9"
+
+notes:
+  - "Assuming @workspace/api-client-react exports both hooks and types directly from its root."
+  - "Using framer-motion for all major transitions."
